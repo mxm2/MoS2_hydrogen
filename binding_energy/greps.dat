@@ -1,0 +1,7 @@
+/home/mxm2/Documents/internal_and_full_opt/single_Ti !    total energy              =    -124.07616302 Ry      PWSCF        :  7m28.15s CPU     7m35.41s WALL
+/home/mxm2/Documents/internal_and_full_opt/single_Li !    total energy              =     -14.93873123 Ry      PWSCF        :    59.09s CPU        59.99s WALL
+/home/mxm2/Documents/internal_and_full_opt/Li_bcc_full_opt !    total energy              =     -30.00914625 Ry      PWSCF        :  2m53.97s CPU     2m55.54s WALL
+/home/mxm2/Documents/internal_and_full_opt/Ti_hcp_full_opt !    total energy              =    -248.95534154 Ry      PWSCF        :  5m22.55s CPU     5m25.52s WALL
+/home/mxm2/Documents/internal_and_full_opt/MoS2_Ti1_4848_full_opt !    total energy              =    -901.75667376 Ry      PWSCF        :    12h 5m CPU       12h11m WALL
+/home/mxm2/Documents/internal_and_full_opt/MoS2_covered_with_Li_full_opt_ecutwfc_suggested_from_Mo_pp_info !    total energy              =    -403.73719484 Ry      PWSCF        :     4h39m CPU       
+/home/mxm2/Documents/internal_and_full_opt/MoS2_ecutwfc_full_opt_suggested_from_Mo_pp_info !    total energy              =    -388.72104774 Ry      PWSCF        :     2h 7m CPU        2h 8m WALL

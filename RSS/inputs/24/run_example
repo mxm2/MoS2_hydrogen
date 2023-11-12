@@ -1,0 +1,205 @@
+#!/bin/sh
+
+# run from directory where this script is
+cd `echo $0 | sed 's/\(.*\)\/.*/\1/'` # extract pathname
+EXAMPLE_DIR=`pwd`
+
+# check whether echo has the -e option
+if test "`echo -e`" = "-e" ; then ECHO=echo ; else ECHO="echo -e" ; fi
+
+$ECHO
+$ECHO "$EXAMPLE_DIR : starting"
+$ECHO
+$ECHO "This example shows how to use pw.x with vdw-DF functional. In the"
+$ECHO "first part a cell relaxation of graphite will be calculated and"
+$ECHO "then the energy of two water molecules far apart will be computed."
+$ECHO "Optionally, at the end, you can see how to set up a force relaxation"
+$ECHO "of an Argon dimer, not activated by default in the distribution."
+
+PREFIX=`cd /usr/share/doc/quantum-espresso ; pwd`
+BIN_DIR=/home/mxm2/espresso-5.4.0/bin
+PSEUDO_DIR=/home/mxm2/Documents/internal_and_full_opt/24
+# Beware: everything in $TMP_DIR will be destroyed !
+TMP_DIR=/home/mxm2/Documents/internal_and_full_opt/24/temp
+
+# required executables and pseudopotentials
+BIN_LIST="pw.x generate_vdW_kernel_table.x"
+PSEUDO_LIST="Mo.pbe-spn-rrkjus_psl.0.3.0.UPF S.pbe-n-rrkjus_psl.0.1.UPF Li.pbe-s-rrkjus_psl.0.2.1.UPF H.pbe-rrkjus_psl.0.1.UPF"
+VDW_TABLE="vdW_kernel_table"
+
+$ECHO
+$ECHO "  executables directory: $BIN_DIR"
+$ECHO "  pseudo directory:      $PSEUDO_DIR"
+$ECHO "  temporary directory:   $TMP_DIR"
+$ECHO "  checking that needed directories and files exist...\c"
+
+# check for directories
+for DIR in "$BIN_DIR" "$PSEUDO_DIR" ; do
+    if test ! -d $DIR ; then
+        $ECHO
+        $ECHO "ERROR: $DIR not existent or not a directory"
+        $ECHO "Aborting"
+        exit 1
+    fi
+done
+for DIR in "$TMP_DIR" "$EXAMPLE_DIR/results" ; do
+    if test ! -d $DIR ; then
+        mkdir $DIR
+    fi
+done
+cd $EXAMPLE_DIR/results
+
+# check for executables
+for FILE in $BIN_LIST ; do
+    if test ! -x $BIN_DIR/$FILE ; then
+        $ECHO
+        $ECHO "ERROR: $BIN_DIR/$FILE not existent or not executable"
+        $ECHO "Aborting"
+        exit 1
+    fi
+done
+
+# check for pseudopotentials
+for FILE in $PSEUDO_LIST ; do
+    if test ! -r $PSEUDO_DIR/$FILE ; then
+       $ECHO
+       $ECHO "Downloading $FILE to $PSEUDO_DIR...\c"
+            $WGET $PSEUDO_DIR/$FILE $NETWORK_PSEUDO/$FILE 2> /dev/null
+    fi
+    if test $? != 0; then
+        $ECHO
+        $ECHO "ERROR: $PSEUDO_DIR/$FILE not existent or not readable"
+        $ECHO "Aborting"
+        exit 1
+    fi
+done
+$ECHO " done"
+
+
+# how to run executables
+PW_COMMAND="$PARA_PREFIX $BIN_DIR/pw.x $PARA_POSTFIX"
+GEN_COMMAND="$PARA_PREFIX $BIN_DIR/generate_vdW_kernel_table.x $PARA_POSTFIX"
+PP_COMMAND="$PARA_PREFIX $BIN_DIR/pp.x $PARA_POSTFIX"
+
+# check for vdw kernel table
+if test ! -r $PSEUDO_DIR/$VDW_TABLE ; then
+	$ECHO " "
+        $ECHO " "
+	$ECHO "  WARNING: $PSEUDO_DIR/$VDW_TABLE not existent or not readable"
+	$ECHO "  WARNING: a new table will be generated, this process will"
+	$ECHO "  WARNING: probably take about 20 mins (depending on your cpu"
+	$ECHO "  WARNING: power and configuration)."
+	$ECHO
+	$ECHO "  Generating $VDW_TABLE...\c"
+	if $GEN_COMMAND ; then
+		if test ! -r $VDW_TABLE ; then
+			$ECHO "  ERROR: cannot generate vdW_kernel_table !!"
+			exit 1
+		fi
+		$ECHO "done ! Table moved to $PSEUDO_DIR"	
+		mv $VDW_TABLE $PSEUDO_DIR
+	fi
+fi 
+$ECHO " done"
+
+# Print how we run executables
+$ECHO
+$ECHO "  running pw.x as: $PW_COMMAND"
+$ECHO
+
+#
+# TiS3 cell relaxation
+#
+cat > TiS3.scf.in << EOF
+ &control
+    prefix='TiS3',
+    calculation = 'relax',
+    restart_mode = 'from_scratch'
+    pseudo_dir='$PSEUDO_DIR',
+    outdir = '$TMP_DIR',
+    forc_conv_thr = 1.0d-3 ,
+    !forc_conv_thr = 1.0d-2 ,
+    nstep = 99,
+    etot_conv_thr = 1.0d-4 ,
+    !etot_conv_thr = 2.0d-10 ,
+ /
+ &system    
+    ibrav=  0, nat=  9, ntyp= 4,
+    celldm(1)=1.889726,
+    ecutwfc = 50.0, ecutrho = 500,
+    occupations ='smearing', smearing ='gaussian',
+    degauss=0.02,
+    input_dft = 'vdW-DF',
+ /
+ &electrons
+    conv_thr = 1e-6,
+    mixing_beta=0.3,
+    electron_maxstep=500
+ /
+ &ions
+ /
+  &cell
+   cell_factor = 1.5
+ /
+ATOMIC_SPECIES
+  Mo  95.9400  Mo.pbe-spn-rrkjus_psl.0.3.0.UPF
+   S  32.0660   S.pbe-n-rrkjus_psl.0.1.UPF
+  Li   6.941    Li.pbe-s-rrkjus_psl.0.2.1.UPF
+   H  1.007940  H.pbe-rrkjus_psl.0.1.UPF
+ATOMIC_POSITIONS crystal
+H	0.918152000	0.404744000	0.215909000
+H	0.780906000	0.502893000	0.206654000
+S	0.499994000	0.831927000	0.924617000
+S	0.499994000	0.829010000	0.080057000
+S	0.999994000	0.337780000	0.082367000
+S	0.999994000	0.334454000	0.921257000
+Mo	0.999994000	0.012775000	0.000940000
+Mo	0.499994000	0.487505000	0.000566000
+Li	0.999994000	0.999898000	0.150433000
+CELL_PARAMETERS (alat) 
+   3.276100000   0.000000000   0.000000000
+   0.000000000   5.683470000   0.000000000
+   0.000000000   0.000000000  20.000000000
+K_POINTS {automatic}
+ 6 6 1 0 0 0
+EOF
+
+$ECHO "  running the graphite cell relaxation...\c"
+$PW_COMMAND < TiS3.scf.in > TiS3.scf.out
+check_failure $?
+$ECHO " done"
+
+# post-processing for charge density
+cat > TiS3.pp_rho.in << EOF
+ &inputpp
+    prefix  = 'TiS3'
+    outdir = '$TMP_DIR/'
+    filplot = 'TiS3charge'
+    plot_num= 0
+ /
+ &plot
+    nfile = 1
+    filepp(1) = 'TiS3charge'
+    weight(1) = 1.0
+    iflag = 3
+    output_format = 5
+    fileout = 'TiS3.xsf'
+ /
+EOF
+$ECHO "  running pp.x to do a 2-d plot of the charge density...\c"
+$PP_COMMAND < TiS3.pp_rho.in > TiS3.pp_rho.out
+check_failure $?
+$ECHO " done"
+
+# clean TMP_DIR
+$ECHO "  cleaning $TMP_DIR...\c"
+rm -rf $TMP_DIR/TiS3*
+$ECHO " done"
+
+# clean TMP_DIR
+$ECHO "  cleaning $TMP_DIR...\c"
+rm -rf $TMP_DIR/ar_vdw*
+$ECHO " done"
+
+$ECHO
+$ECHO "$EXAMPLE_DIR : done"

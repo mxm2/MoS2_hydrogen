@@ -1,0 +1,42 @@
+# generated using pymatgen
+data_LiMo2(HS2)2
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   3.27610000
+_cell_length_b   5.68347000
+_cell_length_c   20.00000000
+_cell_angle_alpha   90.00000000
+_cell_angle_beta   90.00000000
+_cell_angle_gamma   90.00000000
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   LiMo2(HS2)2
+_chemical_formula_sum   'Li1 Mo2 H2 S4'
+_cell_volume   372.39232134
+_cell_formula_units_Z   1
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_type_symbol
+ _atom_type_oxidation_number
+  Li+  1.0
+  Mo4+  4.0
+  H+  1.0
+  S2-  -2.0
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  H+  H1  1  0.942354  0.218713  0.301152  1.0
+  H+  H2  1  0.789015  0.163299  0.279013  1.0
+  S2-  S3  1  0.499994  0.831927  0.924617  1.0
+  S2-  S4  1  0.499994  0.829010  0.080057  1.0
+  S2-  S5  1  0.999994  0.337780  0.082367  1.0
+  S2-  S6  1  0.999994  0.334454  0.921257  1.0
+  Mo4+  Mo7  1  0.999994  0.012775  0.000940  1.0
+  Mo4+  Mo8  1  0.499994  0.487505  0.000566  1.0
+  Li+  Li9  1  0.999994  0.999898  0.150433  1.0
