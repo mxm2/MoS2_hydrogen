@@ -2,10 +2,12 @@
 Hydrogen is considered to be a clean alternative to fossil fuels. Hydrogen storage using two dimensional (2D) materials are gaining attention due to their large surface area to volume ratio. Such 2D systems act as substrates onto which the metal atoms are to be dispersed to adsorb H2 molecules through different mechanisms. This example shows the calculation of the adsorption energy of single H2 molecule on a surface of monolayer MoS2 decorated with Li and Ti. The CIF files and input files for Quantum ESPRESSO program [1] were generated using python scripts written on the basis of pymatgen open-source python library for materials analysis [2]. The approach to searching for the most energetically stable configuration was based on the methodology of the ab initio random structure searching method [3,4], which is one of the most accurate methods at the moment. OrderDisorderedTransformation package of pymatgen together with ab initio calculations were used to find the most favorable positions for placing of Ti and Li on the surface of monolayer MoS2. PBE+DFT-D2 method was used. Using these calculations, the maximum hydrogen storage capacity, adsorption energy, and hydrogen adsorption mechanism can be determined, see for example our work [5].
 
 Adsorphion of single H2 molecule on monolayer Li-decorated MoS2:
-![alt text](https://github.com/mxm2/MoS2_hydrogen/blob/main/RSS.bmp)
+</br>
+<img src="https://github.com/mxm2/MoS2_hydrogen/blob/main/RSS.bmp" width=50% height=50%>
 
 Adsorphion of single H2 molecule on monolayer Ti-decorated MoS2:
-![alt text](https://github.com/mxm2/MoS2_hydrogen/blob/main/RSS_Ti.bmp)
+</br>
+<img src="https://github.com/mxm2/MoS2_hydrogen/blob/main/RSS_Ti.bmp" width=50% height=50%>
 
 References:
 [1]	P. Giannozzi, S. Baroni, N. Bonini, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, G.L. Chiarotti, M. Cococcioni, I. Dabo, A. Dal Corso, S. de Gironcoli, S. Fabris, G. Fratesi, R. Gebauer, U. Gerstmann, C. Gougoussis, A. Kokalj, M. Lazzeri, L. Martin-Samos, N. Marzari, F. Mauri, R. Mazzarello, S. Paolini, A. Pasquarello, L. Paulatto, C. Sbraccia, S. Scandolo, G. Sclauzero, A.P. Seitsonen, A. Smogunov, P. Umari, R.M. Wentzcovitch, QUANTUM ESPRESSO: a modular and open-source software project for quantum simulations of materials, J. Phys. Condens. Matter. 21 (2009) 395502. doi:10.1088/0953-8984/21/39/395502.
