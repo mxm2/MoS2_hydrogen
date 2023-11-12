@@ -1,0 +1,45 @@
+#======================================================================
+
+# CRYSTAL DATA
+
+#----------------------------------------------------------------------
+
+data_VESTA_phase_1
+
+
+_chemical_name_common                  'XCrySDen XSF file'
+_cell_length_a                         6.59365
+_cell_length_b                         5.68615
+_cell_length_c                         20.00000
+_cell_angle_alpha                      90
+_cell_angle_beta                       90
+_cell_angle_gamma                      90
+_space_group_name_H-M_alt              'P 1'
+_space_group_IT_number                 1
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_B_iso_or_equiv
+   _atom_site_type_symbol
+   Ti1        1.0     0.250000      0.162689      0.131546     Biso  1.000000 Ti
+   Mo1        1.0     0.000362      0.005698      0.000861     Biso  1.000000 Mo
+   Mo2        1.0     0.499638      0.005698      0.000861     Biso  1.000000 Mo
+   Mo3        1.0     0.250000      0.484637      0.000725     Biso  1.000000 Mo
+   Mo4        1.0     0.750000      0.507768     -0.001459     Biso  1.000000 Mo
+   S1         1.0     0.250000      0.829774      0.925765     Biso  1.000000 S
+   S2         1.0     0.750000      0.840732      0.922582     Biso  1.000000 S
+   S3         1.0     0.250000      0.805995      0.085761     Biso  1.000000 S
+   S4         1.0     0.750000      0.838993      0.076926     Biso  1.000000 S
+   S5         1.0     0.516033      0.340800      0.083883     Biso  1.000000 S
+   S6         1.0    -0.016033      0.340800      0.083883     Biso  1.000000 S
+   S7         1.0     0.500056      0.334759      0.922632     Biso  1.000000 S
+   S8         1.0    -0.000056      0.334759      0.922632     Biso  1.000000 S
